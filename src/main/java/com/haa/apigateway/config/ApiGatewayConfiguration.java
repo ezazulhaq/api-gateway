@@ -19,7 +19,10 @@ public class ApiGatewayConfiguration {
                 .filters(f -> f.addRequestHeader("MyHeader", "MyURI").addRequestParameter("Param", "MyValue"))
                 .uri("http://httpbin.org:80");
 
-        return builder.routes().route(routeFunction).build();
+        Function<PredicateSpec, Buildable<Route>> currencyExchangeRoute = p -> p.path("/currency-exchange/**")
+                .uri("lb://currency-exchange-service");
+
+        return builder.routes().route(routeFunction).route(currencyExchangeRoute).build();
     }
 
 }
