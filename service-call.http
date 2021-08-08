@@ -1,0 +1,6 @@
+# Service call through API Gateway
+GET http://localhost:8765/CURRENCY-EXCHANGE-SERVICE/currency-exchange/from/USD/to/INR HTTP/1.1
+###
+GET http://localhost:8765/CURRENCY-CONVERSION-SERVICE/currency-conversion/from/EUR/to/INR/quantity/10 HTTP/1.1
+###
+GET http://localhost:8765/CURRENCY-CONVERSION-SERVICE/currency-conversion-feign/from/USD/to/INR/quantity/10 HTTP/1.1
