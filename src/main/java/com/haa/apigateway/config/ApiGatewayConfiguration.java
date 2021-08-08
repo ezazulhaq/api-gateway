@@ -28,8 +28,14 @@ public class ApiGatewayConfiguration {
         Function<PredicateSpec, Buildable<Route>> currencyConversionRouteFeign = p -> p
                 .path("/currency-conversion-feign/**").uri("lb://currency-conversion-service");
 
+        Function<PredicateSpec, Buildable<Route>> currencyConversionRouteNew = p -> p
+                .path("/currency-conversion-new/**")
+                .filters(f -> f.rewritePath("/currency-conversion-new/(?<segment>.*)",
+                        "/currency-conversion-feign/${segment}"))
+                .uri("lb://currency-conversion-service");
+
         return builder.routes().route(routeFunction).route(currencyExchangeRoute).route(currencyConversionRoute)
-                .route(currencyConversionRouteFeign).build();
+                .route(currencyConversionRouteFeign).route(currencyConversionRouteNew).build();
     }
 
 }
