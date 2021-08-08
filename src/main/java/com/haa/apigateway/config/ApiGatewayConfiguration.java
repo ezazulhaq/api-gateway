@@ -22,7 +22,14 @@ public class ApiGatewayConfiguration {
         Function<PredicateSpec, Buildable<Route>> currencyExchangeRoute = p -> p.path("/currency-exchange/**")
                 .uri("lb://currency-exchange-service");
 
-        return builder.routes().route(routeFunction).route(currencyExchangeRoute).build();
+        Function<PredicateSpec, Buildable<Route>> currencyConversionRoute = p -> p.path("/currency-conversion/**")
+                .uri("lb://currency-conversion-service");
+
+        Function<PredicateSpec, Buildable<Route>> currencyConversionRouteFeign = p -> p
+                .path("/currency-conversion-feign/**").uri("lb://currency-conversion-service");
+
+        return builder.routes().route(routeFunction).route(currencyExchangeRoute).route(currencyConversionRoute)
+                .route(currencyConversionRouteFeign).build();
     }
 
 }
